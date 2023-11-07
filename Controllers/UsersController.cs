@@ -33,8 +33,7 @@ namespace WebApi.Controllers
         [HttpGet("GetByName")]
         public IActionResult GetByName(string name)
         {
-            var query = "SELECT * FROM Users WHERE Name = @name";
-            var result = _db.Users.FromSqlRaw(query, new SqlParameter("@name",name));
+            var result = _db.Users.Where(x => x.Name == name);
 
             if (result.Any())
             {
