@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Model;
 
@@ -32,7 +33,14 @@ namespace WebApi.Controllers
         [HttpGet("GetByName")]
         public IActionResult GetByName(string name)
         {
-            return Ok(name);
+            var query = "SELECT * FROM Users WHERE Name = @name";
+            var result = _db.Users.FromSqlRaw(query, new SqlParameter("@name",name));
+
+            if (result.Any())
+            {
+                return Ok(result.ToArray());
+            }
+            return NotFound("Kayıt Bulunamadı");
         }
 
     }
