@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.Model;
 
 namespace WebApi.Controllers
 {
@@ -8,9 +9,11 @@ namespace WebApi.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ILogger<UsersController> _logger;
+        private readonly AppDbContext _db;
 
-        public UsersController(ILogger<UsersController> logger)
+        public UsersController(AppDbContext db, ILogger<UsersController> logger)
         {
+            _db = db;
             _logger = logger;
         }
 
