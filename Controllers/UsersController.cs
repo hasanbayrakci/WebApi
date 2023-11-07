@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Model;
 
 namespace WebApi.Controllers
@@ -20,7 +21,12 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            var result = _db.Users;
+            if (result.Any())
+            {
+                return Ok(result.ToArray());
+            }
+            return NotFound("Kayıt Bulunamadı");
         }
 
         [HttpGet("GetByName")]
